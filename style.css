@@ -84,47 +84,28 @@ ul li {
   margin-top: 1%;
   position: relative;
   padding: 0.5em;
+  
 }
-ul li::before {
-  content: "";
-  position: absolute;
-  left: -24px;
-  width: 24px;
-  height: 24px;
+
+
+.task-list button {
+  border: none;
+  background-color: transparent;
   cursor: pointer;
-  background-image: url(/img/circle.png);
-  background-size: cover;
-  background-position: center;
-}
-ul li.checked {
-  text-decoration: line-through;
-  color: #889077;
-}
-ul li.checked::before {
-  content: "";
-  position: absolute;
-  left: -24px;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  background-image: url(/img/check.png);
-  background-size: cover;
-  background-position: center;
-}
-ul li span {
-  position: absolute;
-  top: -4px;
-  right: 5%;
-  cursor: pointer;
-  width: 1em;
-  font-size: 2em;
   color: #120847;
-  text-align: center;
-  border-radius: 50%;
+  font-size: 1em;
+  position: absolute;
+  right: 20px;
 }
-ul li span:hover {
+.task-list button:hover {
   color: #ff6347;
+  
+
 }
+
+
+
+
 @media (max-width: 900px) {
   .row {
     flex-direction: column;

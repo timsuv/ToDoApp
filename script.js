@@ -1,45 +1,69 @@
-const inputBox = document.getElementById('input-box');
-const listContainer = document.getElementById('list-container');
-function addTask() {
-    if(inputBox.value === '') {
-        alert('Please enter a task');
-        
-    }
-    else{
-        let li = document.createElement('li');
-        li.innerHTML = inputBox.value;
-        listContainer.appendChild(li);
-        let span = document.createElement('span');
-        span.innerHTML = '\u00d7';
-        li.appendChild(span);
-    }
-    inputBox.value = '';
-    saveData();
 
+class TodoList {
+  constructor() {
+    this.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    this.inputBox = document.getElementById("input-box");
+    this.listContainer = document.getElementById("list-container");
+    this.showTasks();
+    this.addEventListeners();
+  }
+  addTask() {
+    const taskText = this.inputBox.value.trim();
+    if (taskText === "") {
+      alert("Please enter a task");
+      return;
+    }
+    const task = { text: taskText, completed: false };
+    this.tasks.push(task);
+    this.inputBox.value = "";
+    this.saveTasks();
+    this.renderTasks();
+  }
+  toggleTask(index) {
+    this.tasks[index].completed = !this.tasks[index].completed;
+    this.saveTasks();
+    this.renderTasks();
+  }
+  removeTask(index) {
+    this.tasks.splice(index, 1);
+    this.saveTasks();
+    this.renderTasks();
+  }
+  saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(this.tasks));
+  }
+
+  renderTasks() {
+    this.listContainer.innerHTML = "";
+    this.tasks.forEach((task, index) => {
+      let li = document.createElement("li");
+      li.textContent = task.text;
+      if (task.completed) {
+        li.classList.add("checked");
+      }
+      li.addEventListener("click", () => this.toggleTask(index));
+
+      let span = document.createElement("span");
+      span.innerHTML = "\u00d7";
+      span.addEventListener("click", (event) => {
+        event.stopPropagation();
+        this.removeTask(index);
+      });
+      li.appendChild(span);
+      this.listContainer.appendChild(li);
+    });
+  }
+    showTasks() {
+        this.renderTasks();
+    }
+    addEventListeners(){
+        document.getElementById('add-button').addEventListener('click', () => this.addTask());
+        this.inputBox.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter') {
+                event.preventDefault();
+                this.addTask();
+            }
+        });
+    }
 }
-
-inputBox.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault(); 
-        addTask(); 
-    }
-});
-
-listContainer.addEventListener('click', function(e) {
-    if(e.target.tagName === 'LI') {
-        e.target.classList.toggle('checked');
-        saveData();
-    }
-    else if(e.target.tagName === 'SPAN') {
-        e.target.parentElement.remove();
-        saveData();
-    }
-}, false);
-
-function saveData() {
-    localStorage.setItem('data', listContainer.innerHTML);
-}
-function showTask(){
-    listContainer.innerHTML = localStorage.getItem('data');
-}
-showTask();
+const todoList = new TodoList();

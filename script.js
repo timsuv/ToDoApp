@@ -63,20 +63,28 @@ document.addEventListener("DOMContentLoaded", () => {
         task.completed ? "/img/check.png" : "/img/circle.png"
       }); background-size: cover; background-position: center;"></span>
       ${task.description}
-      <button onclick="deleteTask(event, ${index})">X</button>
+<button class="delete-task-button" data-index="${index}">X</button>
         </li>
       `;
     });
+    
 
     taskListElement.innerHTML = taskListHTML;
   }
+  document.getElementById("taskList").addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-task-button")) {
+      const index = Number(event.target.getAttribute("data-index")); // Convert string to number
+      todoList.removeTask(index);
+      renderTasks(); // Re-render to update the task list
+    }
+  });
 
   window.toggleTask = function (index) {
     todoList.toggleTask(index);
     renderTasks();
   };
 
-  window.deleteTask = function (event, index) {
+  window.deleteTask = function (event, index ) {
     event.stopPropagation();
     todoList.removeTask(index);
     renderTasks();
@@ -86,20 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   addButton.addEventListener("click", () => {
     const taskDescription = taskInput.value.trim();
-    if (taskDescription) {
+    if (taskDescription === "") {
+      window.alert("Please enter a task!");
+    } else {
       todoList.addTask(taskDescription);
       taskInput.value = "";
       renderTasks();
     }
   });
-  taskInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
+  taskInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
       const taskDescription = taskInput.value.trim();
-      if (taskDescription === '') {
-        window.alert('Please enter a task!');
+      if (taskDescription === "") {
+        window.alert("Please enter a task!");
       } else {
         todoList.addTask(taskDescription);
-        taskInput.value = ''; 
+        taskInput.value = "";
         renderTasks();
       }
     }

@@ -17,11 +17,41 @@
       href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
       rel="stylesheet"
     />
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
+    <script type="module" src="points.js" defer></script>
     <title>To Do App</title>
   </head>
   <body>
     <main>
+      <section class="points-container">
+        <div class="points-wrapper">
+          <div class="points-title">
+            <i class="fa-solid fa-trophy"></i>
+            <h2 class="points" id="points">0</h2>
+            <h2>Points</h2>
+          </div>
+          <div class="awards-container">
+            <div class="award-1">
+              <i class="fa-solid fa-medal"></i>
+              <p>10 points</p>
+            </div>
+            <div class="award-2">
+              <i class="fa-solid fa-medal"></i>
+              <i class="fa-solid fa-medal"></i>
+
+              <p>20 points</p>
+            </div>
+            <div class="award-3">
+              <i class="fa-solid fa-medal"></i>
+              <i class="fa-solid fa-medal"></i>
+              <i class="fa-solid fa-medal"></i>
+
+              <p>30 points</p>
+            </div>
+          </div>
+          <div class="rules"><p>Each task that is done gives you 1 point</p></div>
+        </div>
+      </section>
       <section class="container">
         <div class="container-wrapper">
           <div class="todo-app">
@@ -33,14 +63,13 @@
               <input
                 type="text"
                 class="input-row"
-                id="taskInput"  
+                id="taskInput"
                 placeholder="Add a new task"
               />
               <button id="add-button" class="btn-add">Add task</button>
             </div>
             <div class="task-list">
-              <ul id="taskList">  
-              </ul>
+              <ul id="taskList"></ul>
             </div>
           </div>
         </div>

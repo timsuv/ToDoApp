@@ -60,22 +60,21 @@ document.addEventListener("DOMContentLoaded", () => {
         task.completed ? "line-through" : "none"
       };">
       <span style="position: absolute; top: 9px;  left: -40px; width: 24px; height: 24px; background-image: url(${
-        task.completed ? "/img/check.png" : "/img/circle.png"
+        task.completed ? "./img/check.png" : "./img/circle.png"
       }); background-size: cover; background-position: center;"></span>
       ${task.description}
 <button class="delete-task-button" data-index="${index}">X</button>
         </li>
       `;
     });
-    
 
     taskListElement.innerHTML = taskListHTML;
   }
   document.getElementById("taskList").addEventListener("click", (event) => {
     if (event.target.classList.contains("delete-task-button")) {
-      const index = Number(event.target.getAttribute("data-index")); // Convert string to number
+      const index = Number(event.target.getAttribute("data-index"));
       todoList.removeTask(index);
-      renderTasks(); // Re-render to update the task list
+      renderTasks();
     }
   });
 
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTasks();
   };
 
-  window.deleteTask = function (event, index ) {
+  window.deleteTask = function (event, index) {
     event.stopPropagation();
     todoList.removeTask(index);
     renderTasks();
